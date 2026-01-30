@@ -1,0 +1,394 @@
+/* =========================
+   Theme / Base
+========================= */
+:root{
+  --text: #222;
+
+  --line: #e6e6e6;
+  --line-soft: #eeeeee;
+
+  --blue-soft: #d9effc;   /* テーブル見出し */
+  --zebra: #fafcff;       /* 交互色 */
+  --hover: #eef7ff;       /* hover */
+
+  --blue-card: #d9effc;   /* todayカード背景 */
+  --section-line: #b9ddf4;/* セクション区切り線 */
+  --vline: #dcdcdc;       /* 縦の仕切り線（グレー） */
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+  color: var(--text);
+  margin: 0;
+  font-size: 12.5px;
+}
+
+/* =========================
+   Container / Headings
+========================= */
+.page-container{
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+h1{
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 24px;
+  margin: 36px 0 16px;
+}
+
+h2{
+  text-align: center;
+  font-size: 15.5px;
+  margin: 22px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: none; /* 見出し下線は消す */
+}
+
+hr{ display:none; }
+
+/* 2個目のh2（今日の収入/支出）の上に区切り線 */
+h2:nth-of-type(2){
+  border-top: 4px solid var(--section-line);
+  padding-top: 14px;
+  margin-top: 18px;
+}
+
+/* =========================
+   Layout
+========================= */
+.page-layout{
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  margin-top: 14px;
+}
+
+.main-area{
+  flex: 1;
+  min-width: 0;
+}
+
+/* =========================
+   Scroll box
+========================= */
+.scroll-box{
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  border: none;
+  border-radius: 12px;
+}
+
+/* 収支側スクロールは幅固定しない */
+.account-scroll{
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+
+/* =========================
+   Table common
+========================= */
+table{
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+th, td{
+  padding: 7px 8px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+th{
+  text-align: left;
+  font-weight: 700;
+  font-size: 12px;
+  background-color: var(--blue-soft);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+td{
+  font-size: 12px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* 交互色＆hover */
+tbody tr:nth-child(even) td{ background: var(--zebra); }
+tbody tr:hover td{ background: var(--hover); }
+
+/* 最下段だけ下線を消す */
+.task-table tbody tr:last-child td,
+.account-table tbody tr:last-child td{
+  border-bottom: none;
+}
+
+/* =========================
+   縦の仕切り線（青で書いてくれた位置）
+   → いったん全部消して、必要な列だけ付ける
+========================= */
+.task-table th, .task-table td,
+.account-table th, .account-table td{
+  border-right: none;
+}
+
+/* ===== 予定 / タスク一覧：縦線 ===== */
+.task-table th:nth-child(1), .task-table td:nth-child(1){ border-right: 1px solid var(--vline); } /* 時間|タイトル */
+.task-table th:nth-child(2), .task-table td:nth-child(2){ border-right: 1px solid var(--vline); } /* タイトル|カテゴリ */
+.task-table th:nth-child(3), .task-table td:nth-child(3){ border-right: 1px solid var(--vline); } /* カテゴリ|状態 */
+.task-table th:nth-child(4), .task-table td:nth-child(4){ border-right: 1px solid var(--vline); } /* 状態|場所 */
+.task-table th:nth-child(5), .task-table td:nth-child(5){ border-right: 1px solid var(--vline); } /* 場所|メモ */
+.task-table th:nth-child(6), .task-table td:nth-child(6){ border-right: 1px solid var(--vline); } /* メモ|編集 */
+
+/* ===== 収支一覧：縦線 ===== */
+.account-table th:nth-child(1), .account-table td:nth-child(1){ border-right: 1px solid var(--vline); } /* 種別|金額 */
+.account-table th:nth-child(2), .account-table td:nth-child(2){ border-right: 1px solid var(--vline); } /* 金額|タイトル */
+.account-table th:nth-child(3), .account-table td:nth-child(3){ border-right: 1px solid var(--vline); } /* タイトル|カテゴリ */
+.account-table th:nth-child(4), .account-table td:nth-child(4){ border-right: 1px solid var(--vline); } /* カテゴリ|メモ */
+.account-table th:nth-child(5), .account-table td:nth-child(5){ border-right: 1px solid var(--vline); } /* メモ|編集 */
+
+/* =========================
+   Task table widths
+========================= */
+.task-table th:nth-child(1),
+.task-table td:nth-child(1){
+  width: 92px;
+  text-align: center;
+}
+
+.task-table th:nth-child(2),
+.task-table td:nth-child(2){
+  width: 34%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.task-table th:nth-child(3),
+.task-table td:nth-child(3){
+  width: 78px;
+  text-align: center;
+}
+
+.task-table th:nth-child(4),
+.task-table td:nth-child(4){
+  width: 62px;
+  text-align: center;
+}
+
+.task-table th:nth-child(5),
+.task-table td:nth-child(5){
+  width: 80px;
+  text-align: center;
+}
+
+.task-table th:nth-child(6),
+.task-table td:nth-child(6){
+  width: 38%;
+  max-width: 420px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.task-table th:nth-child(7),
+.task-table td:nth-child(7){
+  width: 84px;
+  text-align: center;
+}
+
+/* =========================
+   Account area (収支 + today)
+========================= */
+.account-area{
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+/* =========================
+   Account table widths（収支一覧）
+========================= */
+/* 種別：細く */
+.account-table th:nth-child(1),
+.account-table td:nth-child(1){
+  width: 56px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 金額 */
+.account-table th:nth-child(2),
+.account-table td:nth-child(2){
+  width: 110px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* タイトル */
+.account-table th:nth-child(3),
+.account-table td:nth-child(3){
+  width: 18%;
+  text-align: center;
+}
+
+/* カテゴリ */
+.account-table th:nth-child(4),
+.account-table td:nth-child(4){
+  width: 110px;
+  text-align: center;
+}
+
+/* メモ：暴走（超改行）防止。最低幅を保証 */
+.account-table th:nth-child(5),
+.account-table td:nth-child(5){
+  width: 40%;
+  min-width: 200px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 編集 */
+.account-table th:nth-child(6),
+.account-table td:nth-child(6){
+  width: 84px;
+  text-align: center;
+}
+
+/* =========================
+   todayカード（コンパクト＆枠なし）
+========================= */
+.today-card{
+  flex: 0 0 165px;
+  max-width: 165px;
+
+  background: var(--blue-card);
+  border: none;              /* 黒枠消す */
+  border-radius: 12px;
+  padding: 8px;
+
+  box-shadow: 0 10px 24px rgba(0,0,0,.06);
+  text-align: center;
+}
+
+.today-card h3{
+  text-align: center;
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* （中身のレイアウトは blade 側のクラスに合わせてる想定）
+   例：.today-compact / .left / .right / .tc-title / .tc-value / .today-divider / .today-month */
+
+.today-compact{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+}
+
+.today-compact .right{
+  border-left: 1px solid rgba(0,0,0,.14);
+  padding-left: 10px;
+}
+
+.tc-title{
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: .9;
+}
+
+.tc-value{
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tc-value.income{ color:#118a2a; }
+.tc-value.expense{ color:#c21c1c; }
+
+.today-divider{
+  margin: 8px 0 6px;
+  border-top: 1px solid rgba(0,0,0,.15);
+}
+
+.today-month{
+  text-align: center;
+}
+.today-month .label{
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.today-month .value{
+  font-size: 14px;
+  font-weight: 800;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+/* 今月の収支合計（todayカードの下段）だけ色を付ける */
+.today-month .value.income { color: #118a2a; }
+.today-month .value.expense { color: #c21c1c; }
+
+
+/* =========================
+   Buttons
+========================= */
+.btn-edit{
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid #333;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 10px;
+  color: #222;
+  background: #fff;
+}
+
+.btn-edit:hover{ background: #f0f0f0; }
+
+.edit-cell{
+  white-space: nowrap;
+  text-align: center;
+}
+.text-plus {
+    color: #118a2a;
+}
+
+.text-minus {
+    color: #c21c1c;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 960px){
+  .page-container{ padding: 0 14px 34px; }
+  .page-layout{ gap: 18px; }
+}
+
+@media (max-width: 760px){
+  .page-layout{ display: block; }
+  .account-area{ display: block; }
+
+  .today-card{
+    width: 100%;
+    max-width: 100%;
+    margin-top: 14px;
+  }
+
+  .scroll-box{ max-height: 260px; }
+}
